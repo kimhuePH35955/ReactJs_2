@@ -4,7 +4,6 @@
 //  click vào cancel thì hủy bỏ và đưa về giá trị ban đầu
 // Yêu cầu 4: bên phải các text có nút checkbox, khi click vào nút checkbox thì text bị gạch ngang
 
-
 import { useState } from "react";
 import "./App.css";
 
@@ -26,6 +25,7 @@ function App() {
       completed: false,
     },
   ]);
+
   const [newItem, setNewItem] = useState("");
   const [editItem, setEditItem] = useState({ id: -1, title: "" });
   const [tempCancel, setTempCancel] = useState({ id: -1, title: "" });
@@ -33,6 +33,7 @@ function App() {
   const onChangInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewItem(e.target.value);
   };
+  
   const onAdd = () => {
     if (newItem.trim() !== "") {
       const newItemGr = {
@@ -44,16 +45,19 @@ function App() {
       setNewItem("");
     }
   };
+
   const onDelete = (id: any) => {
     if (confirm("Bạn có chắc chắn muốn xóa không?")) {
       setTodos(todos.filter((todos) => todos.id !== id));
     }
   };
+
   const onEdit = (id: number, title: string) => {
     setEditItem({ id, title });
     setTempCancel({ id, title });
     setNewItem(title);
   };
+
   const onSave = () => {
     if (editItem.id !== -1 && newItem.trim() !== "") {
       setTodos(
@@ -65,19 +69,19 @@ function App() {
       setNewItem("");
     }
   };
+
   const onCancel = () => {
     setEditItem({ id: -1, title: "" });
     setNewItem(tempCancel.title);
-    
   };
 
-  const toggleComplete=(id:number)=>{
+  const toggleComplete = (id: number) => {
     setTodos(
       todos.map((todo) =>
         todo.id === id ? { ...todo, completed: !todo.completed } : todo
       )
     );
-  }
+  };
 
   return (
     <>
@@ -112,20 +116,21 @@ function App() {
           </div>
         </div>
 
-
         <div className="w-full ">
           <div className="">
             {todos.map((todo: any) => (
               <div
-              key={todo.id}
-              className="flex justify-between text-center py-3"
+                key={todo.id}
+                className="flex justify-between text-center py-3"
               >
-              <input
+                <input
                   type="checkbox"
                   checked={todo.completed}
                   onChange={() => toggleComplete(todo.id)}
                 />
-                <p className={todo.completed ? "line-through" : ""}>{todo.title}</p>
+                <p className={todo.completed ? "line-through" : ""}>
+                  {todo.title}
+                </p>
                 <div className="flex">
                   <button
                     onClick={() => onEdit(todo.id, todo.title)}
@@ -149,4 +154,4 @@ function App() {
   );
 }
 
-export default App 
+export default App;
